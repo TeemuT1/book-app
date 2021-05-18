@@ -49,8 +49,19 @@ The app can easily be deployed to Heroku from the root. Remember to set up envir
 ## Deployed demo
 The app is deployed on Heroku at: https://immense-lowlands-29147.herokuapp.com/
 
+## Tests
+Some basic end to end testing is done with Cypress.
+To run Cypress tests, launch the server in test mode and frontend
+1. `'npm run server:test'`
+2. `'npm run start'`
+3. Run tests with graphic test runner: `'npm run cypress:open'`
+or with command line: `'npm run test:e2e'`
+
+You might have to edit ports in cypress.json
+
 ## Improvements that could be done
 1. More tests
 2. Add search, filtering, sorting of books
 3. Use e.g. Websockets for updating the state if data in the database changes (due to other users).
 4. Login / User account management ?
+5. Should use different databases for production and development

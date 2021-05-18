@@ -15,7 +15,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
     console.log('connected to MongoDB')
   })
   .catch((error) => {
-    console.error('error connection to MongoDB:', error.message)
+    console.error('error connecting to MongoDB, has MONGODB_URI been defined?', error.message)
   })
 
 app.use(cors())
