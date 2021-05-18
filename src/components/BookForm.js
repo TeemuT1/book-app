@@ -3,10 +3,6 @@ import { Form, Button } from 'react-bootstrap'
 
 const BookForm = ({ currentBook, handleInputChange, addBook, updateBook, deleteBook }) => {
 
-  const buttonStyle = {
-    margin:'10px'
-  }
-
   return (
     <div>
       <Form id="book-form">
@@ -42,33 +38,37 @@ const BookForm = ({ currentBook, handleInputChange, addBook, updateBook, deleteB
           />
         </Form.Group>
         <div>
-          <Button
-            style={buttonStyle}
-            type="button"
-            data-testid="book-form-add-button"
-            onClick={addBook}
-            disabled={!(currentBook.title && currentBook.author)}
-          >
+          <span className='button-wrapper'>
+            <Button
+              type="button"
+              data-testid="book-form-add-button"
+              onClick={addBook}
+              disabled={!(currentBook.title && currentBook.author)}
+            >
             Save New
-          </Button>
-          <Button
-            style={buttonStyle}
-            type="button"
-            data-testid="book-form-update-button"
-            onClick={updateBook}
-          >
+            </Button>
+          </span>
+          <span className='button-wrapper'>
+            <Button
+              type="button"
+              data-testid="book-form-update-button"
+              onClick={updateBook}
+              disabled={!currentBook.id}
+            >
             Save
-          </Button>
-          <Button
-            style={buttonStyle}
-            type="button"
-            data-testid="book-form-delete-button"
-            variant="danger"
-            onClick={deleteBook}
-            disabled={!currentBook.id}
-          >
+            </Button>
+          </span>
+          <span className='button-wrapper'>
+            <Button
+              type="button"
+              data-testid="book-form-delete-button"
+              variant="danger"
+              onClick={deleteBook}
+              disabled={!currentBook.id}
+            >
             Delete
-          </Button>
+            </Button>
+          </span>
         </div>
       </Form>
     </div>

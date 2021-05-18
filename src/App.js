@@ -24,14 +24,15 @@ const App = () => {
   //needed for cancelling notification timeouts when user performs actions quickly
   const [ notificationTimeoutId, setNotificationTimeoutId ] = useState(null)
 
-  useEffect(async () => {
-    try {
-      const receivedBooks = await bookService.getAll()
+  useEffect(() => {
+    const successCallback = (receivedBooks) => {
       setBooks(receivedBooks)
-    } catch(e) {
-      console.log('error fetching books from database', e)
+    }
+    const errorCallback = (error) => {
+      console.log('error fetching books from database', error)
       notifyWith('Could not fetch books from the database', 'error')
     }
+    bookService.getAll(successCallback, errorCallback)
   },[])
 
   //display a success or error notification to the user for 5 seconds
@@ -52,21 +53,25 @@ const App = () => {
     if(!currentBook.id) {
       notifyWith('No book selected, cannot delete', 'error')
     } else {
-      try {
-        await bookService.remove(currentBook.id)
+
+      const deleteCallback = () => {
         setBooks(books.filter(book => book.id !== currentBook.id))
         setCurrentBook(emptyBook)
         notifyWith('Book deleted successfully', 'success')
-      } catch(e) {
-        if(e.response && e.response.status === 404) {
+      }
+
+      const errorCallback = (error) => {
+        if(error.response && error.response.status === 404) {
           setBooks(books.filter(book => book.id !== currentBook.id))
           setCurrentBook(emptyBook)
           notifyWith('Book was already deleted', 'error')
         } else {
           notifyWith('Could not delete, database might be down', 'error')
         }
-        console.log('error deleting a book', e)
+        console.log('error deleting a book', error)
       }
+      bookService.remove(currentBook.id, deleteCallback, errorCallback)
+
     }
   }
 
@@ -75,15 +80,19 @@ const App = () => {
       notifyWith('Book must have a title and an author!', 'error')
     }
     else {
-      try {
-        const newBook = await bookService.create(currentBook)
+
+      const addCallback = (newBook) => {
         setBooks(books.concat(newBook))
         setCurrentBook(newBook)
         notifyWith('Book added successfully', 'success')
-      } catch(e) {
-        notifyWith('Error saving the book', 'error')
-        console.log('error saving a book', e)
       }
+
+      const errorCallback = (error) => {
+        notifyWith('Error saving the book', 'error')
+        console.log('error saving a book', error)
+      }
+
+      bookService.create(currentBook, addCallback, errorCallback)
     }
   }
 
@@ -91,14 +100,19 @@ const App = () => {
     if(!currentBook.title || !currentBook.author) {
       notifyWith('Book must have a title and an author.', 'error')
     } else {
-      try {
-        const updatedBook = await bookService.update(currentBook)
+
+      const updateCallback = async (updatedBook) => {
         setBooks(books.map(book => book.id === currentBook.id ? updatedBook : book))
         notifyWith('Book info updated', 'success')
-      } catch(e) {
-        notifyWith('Could not update book, maybe it was deleted by another user', 'error')
-        console.log('error updating a book', e)
       }
+
+      const errorCallback = (error) => {
+        notifyWith('Could not update book, maybe it was deleted by another user', 'error')
+        console.log('error updating a book', error)
+      }
+
+      bookService.update(currentBook, updateCallback, errorCallback)
+
     }
   }
 
@@ -117,7 +131,7 @@ const App = () => {
       <Container>
         <Row>
           <Col>
-            <div style={{ position:'fixed', left:'3vw', width:'45vw' }}>
+            <div className='fixed-form-wrapper'>
               <Header headerText='Book App'/>
               <BookForm
                 currentBook={currentBook}

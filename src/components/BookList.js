@@ -3,9 +3,6 @@ import Table from 'react-bootstrap/Table'
 
 const BookList = ({ books, currentBook, selectCurrentBook }) => {
 
-  const currentBookStyle = {
-    backgroundColor: 'teal'
-  }
   if(!books) {
     return(
       <div>Loading books from database...</div>
@@ -20,10 +17,9 @@ const BookList = ({ books, currentBook, selectCurrentBook }) => {
           <tr><th>Title</th><th>Author</th></tr>
           {books.map(book => (
             <tr
-              className='book-list-row'
+              className={`book-list-row ${book.id === currentBook.id ? 'currentBook' : ''}`}
               data-testid={`book-list-row-${book.id}`}
               onClick={() => {selectCurrentBook(book)}}
-              style={book.id === currentBook.id ? currentBookStyle : {}}
               key={book.id}
             >
               <td>

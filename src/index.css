@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.book-list-row.currentBook, tr:nth-of-type(odd).book-list-row.currentBook {
+  background-color: teal;
+}
+
+.button-wrapper {
+  margin:10px;
+}
+
+.fixed-form-wrapper { 
+  position:fixed;
+  left: 3vw;
+  width: 45vw;
+}
+
+.Header {
+  color:blue
+}
+
+.Notification {
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  background-color: lightgrey
+}
+
+.success {
+  color:green;
+}
+
+.error {
+  color:red
+}

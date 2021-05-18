@@ -2,24 +2,28 @@ import axios from 'axios'
 
 const baseUrl = '/api/books'
 
-const getAll = () => {
+const getAll = (successCallback, errorCallback) => {
   const request = axios.get(baseUrl)
-  return request.then(response => response.data)
+  request.then(response => successCallback(response.data))
+    .catch(error => errorCallback(error))
 }
 
-const create = (book) => {
+const create = (book, successCallback, errorCallback) => {
   const request = axios.post(baseUrl, book)
-  return request.then(response => response.data)
+  request.then(response => successCallback(response.data))
+    .catch(error => errorCallback(error))
 }
 
-const update = (book) => {
+const update = (book, successCallback, errorCallback) => {
   const request = axios.put(`${baseUrl}/${book.id}`, book)
-  return request.then(response => response.data)
+  request.then(response => successCallback(response.data))
+    .catch(error => errorCallback(error))
 }
 
-const remove = (id) => {
+const remove = (id, successCallback, errorCallback) => {
   const request = axios.delete(`${baseUrl}/${id}`)
-  return request.then(response => response.data)
+  request.then(response => successCallback(response.data))
+    .catch(error => errorCallback(error))
 }
 
 export default { getAll, create, update, remove }
