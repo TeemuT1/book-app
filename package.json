@@ -23,12 +23,11 @@
     "server:dev": "nodemon server.js --ignore src/",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "server:prod": "node server.js",
+    "start:prod": "npm run build && node server.js",
     "server:test": "cross-env NODE_ENV=test node server.js",
     "cypress:open": "cypress open",
-    "test:e2e": "cypress run",
-    "start:prod": "npm run build && node server.js",
-    "start:dev": "start npm run start && start npm run server:dev"
+    "test:e2e": "cypress run"
   },
   "eslintConfig": {
     "extends": [

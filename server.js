@@ -8,8 +8,6 @@ const cors = require('cors')
 const app = express()
 app.use(express.json())
 
-const PORT = config.PORT || 5000
-
 console.log('connecting to,', config.MONGODB_URI)
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -25,7 +23,7 @@ app.use(express.static(path.join(__dirname, './build')))
 
 app.use('/api/books', booksRouter)
 
-if (process.env.NODE_ENV === 'test') {
+if (config.TEST) {
   const testingRouter = require('./routes/testing')
   app.use('/api/testing', testingRouter)
 }
@@ -34,6 +32,6 @@ app.get('*', function(request, response) {
   response.sendFile(path.resolve(__dirname, './build', 'index.html'))
 })
 
-app.listen(PORT, () => {
-  console.log(`server started on port ${PORT}`)
+app.listen(config.PORT, () => {
+  console.log(`server started on port ${config.PORT}`)
 })
