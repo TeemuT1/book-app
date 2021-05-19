@@ -15,7 +15,7 @@ Tech | Purpose
 ----- |--------
 React |Front-end
 Node |Server
-Express| Server
+Express| Router
 MongoDB|Database
 Cypress|E2E-testing
 react-bootstrap| Styling
@@ -65,3 +65,4 @@ You might have to edit ports in cypress.json
 3. Use e.g. Websockets for updating the state if data in the database changes (due to other users).
 4. Login / User account management ?
 5. Should use different databases for production and development
+7. Make app work properly on small mobile screens
