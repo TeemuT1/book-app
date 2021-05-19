@@ -39,7 +39,7 @@ Frontend will then be served as a static file for requests not meant for the API
 
 While developing run:
 1. `'npm server:dev'` to start the server
-2. `'npm start'`to start the frontfrontend
+2. `'npm start'`to start the frontend
 
 In that case API requests will be proxied from frontend to the backend port. The backend port has to be set to the package.json file's "proxy" property (default 5000)
 
